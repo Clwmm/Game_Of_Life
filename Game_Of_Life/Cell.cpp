@@ -3,10 +3,12 @@
 Cell::Cell(sf::Vector2i position)
 {
 	state = State::dead;
+	this->position = position;
+
 	shape.setFillColor(sf::Color::White);
 	shape.setSize(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 	shape.setOrigin(sf::Vector2f(CELL_SIZE/2, CELL_SIZE/2));
-	shape.setPosition(position.x * 10, position.y * 10);
+	shape.setPosition(position.x * CELL_SIZE, position.y * CELL_SIZE);
 }
 
 Cell::~Cell()
@@ -55,7 +57,13 @@ void Cell::swapState()
 	}
 }
 
+sf::Vector2i Cell::getPosition()
+{
+	return position;
+}
+
 void Cell::draw(sf::RenderWindow& window)
 {
-	window.draw(shape);
+	if (state == State::alive)
+		window.draw(shape);
 }
