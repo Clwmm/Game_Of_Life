@@ -7,6 +7,8 @@
 
 #define MOUSE_WHEEL_SPEED 0.1f
 
+#define MAXT 150
+
 bool inVector(int y, int x, std::vector<std::vector<Cell*>>& vec)
 {
     if (y >= vec.size())
@@ -112,30 +114,28 @@ int main()
 
     std::vector<std::vector<Cell*>> vec2 = { {new Cell(sf::Vector2i(0,0))}};
 
-    addTopVec(vec2);
-    addBotVec(vec2);
-    addLeftVec(vec2);
-    addRightVec(vec2);
+    for (int i = 0; i < MAXT; i++)
+    {
+        addTopVec(vec2);
+        addBotVec(vec2);
+        addLeftVec(vec2);
+        addRightVec(vec2);
+    }
 
-    addTopVec(vec2);
-    addBotVec(vec2);
-    addLeftVec(vec2);
-    addRightVec(vec2);
+    vec2[MAXT][MAXT +1]->setSwapReady();
+    vec2[MAXT][MAXT +1]->swapState();
 
-    vec2[0][1]->setSwapReady();
-    vec2[0][1]->swapState();
+    vec2[MAXT][MAXT +2]->setSwapReady();
+    vec2[MAXT][MAXT +2]->swapState();
 
-    vec2[0][2]->setSwapReady();
-    vec2[0][2]->swapState();
+    vec2[MAXT+1][MAXT]->setSwapReady();
+    vec2[MAXT+1][MAXT]->swapState();
 
-    vec2[1][0]->setSwapReady();
-    vec2[1][0]->swapState();
+    vec2[MAXT+1][MAXT+1]->setSwapReady();
+    vec2[MAXT+1][MAXT+1]->swapState();
 
-    vec2[1][1]->setSwapReady();
-    vec2[1][1]->swapState();
-
-    vec2[2][1]->setSwapReady();
-    vec2[2][1]->swapState();
+    vec2[MAXT+2][MAXT+1]->setSwapReady();
+    vec2[MAXT+2][MAXT+1]->swapState();
 
 
     sf::Clock deltaClock;
@@ -214,7 +214,7 @@ int main()
         {
             for (int j = 0; j < vec2[i].size(); j++)
             {
-                if (vec2[i][j]->getState() == State::alive)
+                /*if (vec2[i][j]->getState() == State::alive)
                 {
                     if (i == 0)
                     {
@@ -236,7 +236,7 @@ int main()
                         addLeftVec(vec2);
                     else if (j == vec2[i].size() - 1)
                         addRightVec(vec2);
-                }
+                }*/
 
                 vec2[i][j]->behaviour(checkNeighbors(i, j, vec2));
                 vec2[i][j]->draw(window);
